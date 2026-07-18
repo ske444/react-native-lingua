@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import { images } from "@/constants/images";
 
 export default function DesignSystemShowcase() {
@@ -32,11 +33,27 @@ export default function DesignSystemShowcase() {
         </View>
 
         {/* Introduction */}
-        <View className="mb-8">
+        <View className="mb-6">
           <Text className="font-h2 text-neutral-text-primary mb-2">Design System</Text>
           <Text className="font-body-large text-neutral-text-secondary">
             Poppins is a modern, geometric sans-serif typeface that provides excellent readability and a friendly personality.
           </Text>
+        </View>
+
+        {/* Onboarding Showcase Banner */}
+        <View className="mb-8 bg-brand-purple/10 border border-brand-purple/20 rounded-[24px] p-5">
+          <Text className="font-h3 text-brand-purple mb-1.5">Interactive Onboarding</Text>
+          <Text className="font-body-medium text-neutral-text-secondary mb-4">
+            Experience the full onboarding screen designed with customized speech bubbles and the winking mascot.
+          </Text>
+          <Link href="/onboarding" asChild>
+            <TouchableOpacity 
+              activeOpacity={0.8}
+              style={[styles.button, styles.primaryButton, { marginBottom: 0 }]}
+            >
+              <Text className="font-h4 text-neutral-background">Open Onboarding Screen</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
 
         {/* Colors Grid */}
