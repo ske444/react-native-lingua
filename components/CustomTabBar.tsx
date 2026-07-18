@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, Dimensions, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   useSharedValue,
@@ -12,9 +12,6 @@ import Animated, {
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const TAB_COUNT = 5;
-const TAB_WIDTH = SCREEN_WIDTH / TAB_COUNT;
 const CIRCLE_SIZE = 52;
 const TAB_BAR_HEIGHT = 66; // Compact core tab bar height
 
@@ -165,11 +162,13 @@ function TabItem({
 }
 
 export default function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const { width } = useWindowDimensions();
+  const tabWidth = width / state.routes.length;
   const insets = useSafeAreaInsets();
   const activeIndexShared = useSharedValue(state.index);
 
-  // Reduce the bottom inset slightly to push the tab bar down and minimize blank space
-  const bottomInset = insets.bottom > 0 ? insets.bottom - 12 : 0;
+  // Preserve the full insets.bottom value to ensure correct safe area alignment
+  const bottomInset = insets.bottom > 0 ? insets.bottom : 0;
 
   useEffect(() => {
     activeIndexShared.value = withTiming(state.index, {
@@ -180,7 +179,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
 
   // Animated style for the sliding active background circle
   const indicatorStyle = useAnimatedStyle(() => {
-    const translateX = activeIndexShared.value * TAB_WIDTH + (TAB_WIDTH - CIRCLE_SIZE) / 2;
+    const translateX = activeIndexShared.value * tabWidth + (tabWidth - CIRCLE_SIZE) / 2;
     const translateY = (TAB_BAR_HEIGHT - CIRCLE_SIZE) / 2;
 
     return {
@@ -189,7 +188,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
         { translateY },
       ],
     };
-  });
+  }, [tabWidth]);
 
   return (
     <View

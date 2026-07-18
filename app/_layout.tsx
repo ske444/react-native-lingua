@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { ClerkProvider, useAuth } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { useLanguageStore } from "../store/useLanguageStore";
+import { useProgressStore } from "../store/useProgressStore";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -17,11 +18,28 @@ if (!publishableKey) {
 SplashScreen.preventAutoHideAsync();
 
 function InitialLayout() {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, userId } = useAuth();
   const segments = useSegments();
   const router = useRouter();
   const selectedLanguageId = useLanguageStore((state) => state.selectedLanguageId);
   const hasHydrated = useLanguageStore((state) => state.hasHydrated);
+
+  useEffect(() => {
+    if (isLoaded) {
+      useProgressStore.setState({ hasHydrated: false });
+      const storageKey = userId ? `lingua-progress-storage-${userId}` : 'lingua-progress-storage';
+      useProgressStore.persist.setOptions({
+        name: storageKey,
+      });
+      useProgressStore.persist.rehydrate();
+    }
+  }, [isLoaded, userId]);
+
+  useEffect(() => {
+    if (isLoaded && hasHydrated) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoaded, hasHydrated]);
 
   useEffect(() => {
     if (!isLoaded || !hasHydrated) return;
@@ -50,6 +68,10 @@ function InitialLayout() {
     }
   }, [isSignedIn, isLoaded, hasHydrated, selectedLanguageId, segments, router]);
 
+  if (!isLoaded || !hasHydrated) {
+    return null;
+  }
+
   return (
     <Stack
       screenOptions={{
@@ -68,10 +90,10 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded || error) {
+    if (error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [error]);
 
   if (!loaded && !error) {
     return null;

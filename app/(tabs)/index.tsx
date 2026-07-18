@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { useAuth, useUser } from "@clerk/expo";
 import { useLanguageStore } from "@/store/useLanguageStore";
@@ -40,7 +41,32 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   
   const { selectedLanguageId, setSelectedLanguageId } = useLanguageStore();
-  const { xp, dailyGoalXp, streak, completedLessonIds, resetProgress } = useProgressStore();
+  const {
+    xp,
+    dailyGoalXp,
+    dailyXp,
+    dailyXpDate,
+    streak,
+    completedLessonIds,
+    resetProgress,
+    hasHydrated,
+  } = useProgressStore();
+
+  if (!hasHydrated) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#FFFFFF" }}>
+        <ActivityIndicator size="large" color="#6C4EF5" />
+      </View>
+    );
+  }
+
+  const getTodayDateString = () => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  };
+
+  const todayStr = getTodayDateString();
+  const displayDailyXp = dailyXpDate === todayStr ? dailyXp : 0;
 
   const selectedLanguage = languages.find((lang) => lang.id === selectedLanguageId);
   const userName = user?.firstName || "Learner";
@@ -109,9 +135,6 @@ export default function HomeScreen() {
             <Image source={images.streakFire} className="w-6 h-6" resizeMode="contain" />
             <Text className="font-h3 text-[#FF8A00] ml-1.5 font-bold">{streak}</Text>
           </View>
-          <TouchableOpacity className="w-8 h-8 items-center justify-center">
-            <Ionicons name="notifications-outline" size={26} color="#0D132B" />
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -128,7 +151,7 @@ export default function HomeScreen() {
                 Daily goal
               </Text>
               <View className="flex-row items-baseline mt-1.5">
-                <Text className="font-h1 text-neutral-text-primary text-[32px] font-bold">{xp}</Text>
+                <Text className="font-h1 text-neutral-text-primary text-[32px] font-bold">{displayDailyXp}</Text>
                 <Text className="font-body-large text-neutral-text-secondary"> / {dailyGoalXp} XP</Text>
               </View>
             </View>
@@ -137,7 +160,7 @@ export default function HomeScreen() {
           {/* Progress Bar */}
           <View className="w-full h-3.5 bg-[#FFE6D1] rounded-full overflow-hidden">
             <View
-              style={{ width: `${Math.min(100, (xp / dailyGoalXp) * 100)}%` }}
+              style={{ width: `${Math.min(100, (displayDailyXp / dailyGoalXp) * 100)}%` }}
               className="h-full bg-semantic-streak rounded-full"
             />
           </View>
@@ -255,7 +278,7 @@ export default function HomeScreen() {
                   className="font-body-small text-neutral-text-secondary mt-0.5"
                   numberOfLines={1}
                 >
-                  {totalVocabularyCount || 10} words
+                  {totalVocabularyCount ?? 10} words
                 </Text>
               </View>
             </View>
