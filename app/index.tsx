@@ -3,8 +3,11 @@ import { View, Text, ScrollView, SafeAreaView, TouchableOpacity, StyleSheet } fr
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { images } from "@/constants/images";
+import { useAuth } from "@clerk/expo";
 
 export default function DesignSystemShowcase() {
+  const { signOut } = useAuth();
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView 
@@ -22,13 +25,22 @@ export default function DesignSystemShowcase() {
             />
             <Text className="font-h1 text-neutral-text-primary text-[32px]">lingua</Text>
           </View>
-          <View className="bg-brand-purple/10 px-3 py-1.5 rounded-full flex-row items-center gap-1.5">
-            <Image 
-              source={images.streakFire} 
-              style={{ width: 16, height: 16 }}
-              contentFit="contain"
-            />
-            <Text className="font-caption text-brand-purple font-semibold text-[11px]">DS v1.0</Text>
+          <View className="flex-row items-center gap-2">
+            <View className="bg-brand-purple/10 px-3 py-1.5 rounded-full flex-row items-center gap-1.5">
+              <Image 
+                source={images.streakFire} 
+                style={{ width: 16, height: 16 }}
+                contentFit="contain"
+              />
+              <Text className="font-caption text-brand-purple font-semibold text-[11px]">DS v1.0</Text>
+            </View>
+            <TouchableOpacity 
+              activeOpacity={0.8}
+              onPress={() => signOut()}
+              className="bg-semantic-error/10 px-3 py-1.5 rounded-full"
+            >
+              <Text className="font-caption text-semantic-error font-semibold text-[11px]">Sign Out</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
