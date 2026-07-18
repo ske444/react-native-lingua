@@ -4,9 +4,13 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { images } from "@/constants/images";
 import { useAuth } from "@clerk/expo";
+import { useLanguageStore } from "@/store/useLanguageStore";
+import { languages } from "@/data/languages";
 
 export default function DesignSystemShowcase() {
   const { signOut } = useAuth();
+  const { selectedLanguageId } = useLanguageStore();
+  const selectedLanguage = languages.find(lang => lang.id === selectedLanguageId) || languages[0];
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -61,9 +65,38 @@ export default function DesignSystemShowcase() {
           <Link href="/onboarding" asChild>
             <TouchableOpacity 
               activeOpacity={0.8}
+              style={[styles.button, styles.secondaryButton, { marginBottom: 0 }]}
+            >
+              <Text className="font-h4 text-neutral-text-primary">Open Onboarding Screen</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+
+        {/* Language Selection Banner */}
+        <View className="mb-8 bg-brand-purple/10 border border-brand-purple/20 rounded-[24px] p-5">
+          <Text className="font-h3 text-brand-purple mb-1.5">Language Selection</Text>
+          <Text className="font-body-medium text-neutral-text-secondary mb-4">
+            Select the language you want to learn and save it globally.
+          </Text>
+          
+          {selectedLanguage && (
+            <View className="flex-row items-center gap-3.5 mb-4 bg-neutral-background border border-neutral-border/60 p-3.5 rounded-2xl">
+              <View className="w-10 h-10 rounded-full bg-neutral-surface border border-neutral-border/40 items-center justify-center overflow-hidden">
+                <Text className="text-[22px]">{selectedLanguage.flag}</Text>
+              </View>
+              <View>
+                <Text className="font-h4 text-neutral-text-primary">{selectedLanguage.name} ({selectedLanguage.nativeName})</Text>
+                <Text className="font-caption text-neutral-text-secondary">Selected Active Language</Text>
+              </View>
+            </View>
+          )}
+
+          <Link href="/language-selection" asChild>
+            <TouchableOpacity 
+              activeOpacity={0.8}
               style={[styles.button, styles.primaryButton, { marginBottom: 0 }]}
             >
-              <Text className="font-h4 text-neutral-background">Open Onboarding Screen</Text>
+              <Text className="font-h4 text-neutral-background">Open Language Selection</Text>
             </TouchableOpacity>
           </Link>
         </View>
