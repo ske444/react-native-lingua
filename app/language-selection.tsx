@@ -16,6 +16,7 @@ import { Feather } from "@expo/vector-icons";
 import { images } from "@/constants/images";
 import { languages } from "@/data/languages";
 import { useLanguageStore } from "@/store/useLanguageStore";
+import { usePostHog } from "posthog-react-native";
 
 // Learner count mapping matching the design specifications
 const learnerCounts: Record<string, string> = {
@@ -26,6 +27,7 @@ const learnerCounts: Record<string, string> = {
 
 export default function LanguageSelectionScreen() {
   const router = useRouter();
+  const posthog = usePostHog();
   const { selectedLanguageId, setSelectedLanguageId, hasHydrated } = useLanguageStore();
   
   // Local state for temporary UI selection before confirmation
@@ -39,7 +41,12 @@ export default function LanguageSelectionScreen() {
   }, [hasHydrated, selectedLanguageId]);
 
   const handleConfirm = () => {
+    const selectedLanguage = languages.find((language) => language.id === selectedId);
     setSelectedLanguageId(selectedId);
+    posthog.capture("language_selected", {
+      language_id: selectedId,
+      language_name: selectedLanguage?.name,
+    });
     router.replace("/");
   };
 

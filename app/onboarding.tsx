@@ -4,9 +4,16 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { images } from "@/constants/images";
+import { usePostHog } from "posthog-react-native";
 
 export default function OnboardingScreen() {
   const router = useRouter();
+  const posthog = usePostHog();
+
+  const handleGetStarted = () => {
+    posthog.capture("onboarding_started");
+    router.push("/signup");
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -75,7 +82,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity
             activeOpacity={0.8}
             style={[styles.button, styles.buttonShadow]}
-            onPress={() => router.push("/signup")}
+            onPress={handleGetStarted}
           >
             <Text className="text-white font-poppins-semibold text-[17px] text-center flex-1">Get Started</Text>
             <View className="absolute right-5">
