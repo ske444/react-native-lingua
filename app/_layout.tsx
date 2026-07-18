@@ -1,12 +1,14 @@
 import "../global.css";
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Stack, useGlobalSearchParams, usePathname, useRouter, useSegments } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ClerkProvider, useAuth } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { useLanguageStore } from "../store/useLanguageStore";
 import { useProgressStore } from "../store/useProgressStore";
+import { PostHogProvider } from "posthog-react-native";
+import { posthog } from "../posthog";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -19,10 +21,38 @@ SplashScreen.preventAutoHideAsync();
 
 function InitialLayout() {
   const { isLoaded, isSignedIn, userId } = useAuth();
+  const pathname = usePathname();
+  const params = useGlobalSearchParams();
+  const previousPathname = useRef<string | undefined>(undefined);
   const segments = useSegments();
   const router = useRouter();
   const selectedLanguageId = useLanguageStore((state) => state.selectedLanguageId);
   const hasHydrated = useLanguageStore((state) => state.hasHydrated);
+
+  useEffect(() => {
+    if (previousPathname.current !== pathname) {
+      // Allow only non-sensitive, explicitly approved analytics route properties
+      const allowedParams: Record<string, any> = {};
+      const approvedKeys = ["tab", "screen", "lang", "lessonId", "unitId", "id", "ref"];
+      for (const key of approvedKeys) {
+        if (params[key] !== undefined) {
+          allowedParams[key] = params[key];
+        }
+      }
+
+      posthog.screen(pathname, {
+        previous_screen: previousPathname.current ?? null,
+        ...allowedParams,
+      });
+      previousPathname.current = pathname;
+    }
+  }, [pathname, params]);
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn && userId) {
+      posthog.identify(userId);
+    }
+  }, [isLoaded, isSignedIn, userId]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -101,7 +131,12 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <InitialLayout />
+      <PostHogProvider
+        client={posthog}
+        autocapture={{ captureScreens: false, captureTouches: true, propsToCapture: ["testID"] }}
+      >
+        <InitialLayout />
+      </PostHogProvider>
     </ClerkProvider>
   );
 }

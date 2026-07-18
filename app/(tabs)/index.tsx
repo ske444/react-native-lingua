@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { useAuth, useUser } from "@clerk/expo";
 import { useLanguageStore } from "@/store/useLanguageStore";
@@ -19,6 +20,7 @@ import { images } from "@/constants/images";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { usePostHog } from "posthog-react-native";
 
 
 const getGreeting = (langId: string, name: string) => {
@@ -39,6 +41,7 @@ export default function HomeScreen() {
   const { user } = useUser();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const posthog = usePostHog();
   
   const { selectedLanguageId, setSelectedLanguageId } = useLanguageStore();
   const {
@@ -96,11 +99,42 @@ export default function HomeScreen() {
 
   const handleResetProgress = () => {
     resetProgress();
+    posthog.capture("progress_reset", {
+      language_id: selectedLanguageId,
+    });
   };
 
   // Extract the specific lessons for the unit (usually 3 lessons)
   const firstLesson = currentLessons[0];
   const secondLesson = currentLessons[1];
+
+  const handleContinueLearning = () => {
+    posthog.capture("learning_continued", {
+      language_id: selectedLanguageId,
+      unit_order: currentUnit?.order ?? null,
+    });
+    router.push("/learn");
+  };
+
+  const handleConversationPractice = () => {
+    posthog.capture("conversation_practice_started", {
+      language_id: selectedLanguageId,
+      lesson_id: secondLesson?.id ?? null,
+    });
+    router.push("/chat");
+  };
+
+  const handleSignOut = async () => {
+    posthog.capture("user_signed_out");
+    try {
+      await posthog.flush();
+    } catch (e) {
+      console.warn("PostHog flush failed on sign out:", e);
+    } finally {
+      posthog.reset();
+      await signOut();
+    }
+  };
 
   // Check completion states
   const isFirstCompleted = firstLesson ? completedLessonIds.includes(firstLesson.id) : false;
@@ -135,6 +169,14 @@ export default function HomeScreen() {
             <Image source={images.streakFire} className="w-6 h-6" resizeMode="contain" />
             <Text className="font-h3 text-[#FF8A00] ml-1.5 font-bold">{streak}</Text>
           </View>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => Alert.alert("Notifications", "No new notifications at this time.")}
+            accessibilityRole="button"
+            accessibilityLabel="Notifications"
+          >
+            <Ionicons name="notifications-outline" size={26} color="#0D132B" />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -180,7 +222,7 @@ export default function HomeScreen() {
             </Text>
             <TouchableOpacity
               activeOpacity={0.9}
-              onPress={() => router.push("/learn")}
+              onPress={handleContinueLearning}
               className="bg-white py-3 px-6 rounded-2xl mt-4 self-start shadow-sm"
             >
               <Text className="font-h4 text-brand-purple font-bold">Continue</Text>
@@ -236,7 +278,7 @@ export default function HomeScreen() {
           {/* Item 2: AI Conversation */}
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => router.push("/chat")}
+            onPress={handleConversationPractice}
             className="flex-row items-center justify-between bg-white border border-neutral-border/50 p-4 rounded-2xl mb-3 shadow-sm"
           >
             <View className="flex-row items-center flex-1">
@@ -319,7 +361,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => signOut()}
+            onPress={handleSignOut}
             className="w-full bg-[#FFEAEB] border border-[#FFD0D2] py-4 rounded-2xl items-center"
             accessibilityRole="button"
             accessibilityLabel="Sign out"

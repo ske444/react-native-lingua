@@ -695,5 +695,681 @@ export const lessons: Lesson[] = [
         correctAnswer: 'Salut, ça va ?'
       }
     ]
+  },
+  // ==========================================
+  // SPANISH EXTRA LESSONS
+  // ==========================================
+  {
+    id: 'es-u1-l4',
+    unitId: 'es-u1',
+    title: 'Travel & Directions',
+    description: 'Learn to ask for directions and navigate a city.',
+    type: 'vocabulary',
+    xpReward: 15,
+    goals: ['Ask for directions', 'Identify key landmarks'],
+    vocabulary: [
+      {
+        id: 'es-v10',
+        word: 'dónde',
+        translation: 'where',
+        pronunciation: 'dohn-deh',
+        partOfSpeech: 'adverb',
+        exampleSentence: '¿Dónde está el baño?',
+        exampleTranslation: 'Where is the bathroom?'
+      },
+      {
+        id: 'es-v11',
+        word: 'estación',
+        translation: 'station',
+        pronunciation: 'es-tah-syohn',
+        partOfSpeech: 'noun',
+        exampleSentence: 'La estación de tren está cerca.',
+        exampleTranslation: 'The train station is nearby.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'es-p6',
+        phrase: '¿Dónde está la estación?',
+        translation: 'Where is the station?',
+        pronunciation: 'dohn-deh es-tah lah es-tah-syohn',
+        context: 'Asking for public transport locations.'
+      }
+    ],
+    activities: [
+      {
+        id: 'es-u1-l4-a1',
+        type: 'multiple_choice',
+        question: 'What is "where" in Spanish?',
+        instruction: 'Select the correct translation',
+        options: ['Aquí', 'Dónde', 'Allí'],
+        correctOptionIndex: 1
+      }
+    ]
+  },
+  {
+    id: 'es-u1-l5',
+    unitId: 'es-u1',
+    title: 'Shopping time',
+    description: 'Practice buying items and asking for prices.',
+    type: 'chat',
+    xpReward: 20,
+    goals: ['Inquire about prices', 'Express buying intent'],
+    vocabulary: [
+      {
+        id: 'es-v12',
+        word: 'cuánto cuesta',
+        translation: 'how much does it cost',
+        pronunciation: 'kwan-toh kwes-tah',
+        partOfSpeech: 'phrase',
+        exampleSentence: '¿Cuánto cuesta este libro?',
+        exampleTranslation: 'How much does this book cost?'
+      }
+    ],
+    phrases: [
+      {
+        id: 'es-p7',
+        phrase: '¿Cuánto cuesta esto?',
+        translation: 'How much is this?',
+        pronunciation: 'kwan-toh kwes-tah es-toh'
+      }
+    ],
+    activities: [
+      {
+        id: 'es-u1-l5-a1',
+        type: 'chat_roleplay',
+        question: 'Talk to the vendor at the market.',
+        instruction: 'Ask the price of the apples.',
+        roleplayContext: 'The user is at a local market in Barcelona. The vendor greets them: "¡Hola! Buenas tardes. ¿En qué le puedo ayudar?"'
+      }
+    ]
+  },
+  {
+    id: 'es-u1-l6',
+    unitId: 'es-u1',
+    title: 'Family & Friends',
+    description: 'Describe your family members and relationships.',
+    type: 'video',
+    xpReward: 25,
+    goals: ['Introduce family members', 'Describe characteristics'],
+    vocabulary: [
+      {
+        id: 'es-v13',
+        word: 'madre',
+        translation: 'mother',
+        pronunciation: 'mah-dreh',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Mi madre es muy simpática.',
+        exampleTranslation: 'My mother is very friendly.'
+      },
+      {
+        id: 'es-v14',
+        word: 'padre',
+        translation: 'father',
+        pronunciation: 'pah-dreh',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Mi padre trabaja en Madrid.',
+        exampleTranslation: 'My father works in Madrid.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'es-p8',
+        phrase: 'Esta es mi familia',
+        translation: 'This is my family',
+        pronunciation: 'es-tah es mee fah-mee-lyah'
+      }
+    ],
+    activities: [
+      {
+        id: 'es-u1-l6-a1',
+        type: 'speak',
+        question: 'Say: "Esta es mi familia"',
+        instruction: 'Speak clearly into the microphone',
+        correctAnswer: 'Esta es mi familia'
+      }
+    ]
+  },
+  {
+    id: 'es-u1-l7',
+    unitId: 'es-u1',
+    title: 'Food & Dining',
+    description: 'Order food and identify key dishes at a restaurant.',
+    type: 'grammar',
+    xpReward: 15,
+    goals: ['Order a meal politely', 'Identify common foods'],
+    vocabulary: [
+      {
+        id: 'es-v15',
+        word: 'agua',
+        translation: 'water',
+        pronunciation: 'ah-gwah',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Un vaso de agua, por favor.',
+        exampleTranslation: 'A glass of water, please.'
+      },
+      {
+        id: 'es-v16',
+        word: 'comida',
+        translation: 'food / meal',
+        pronunciation: 'coh-mee-dah',
+        partOfSpeech: 'noun',
+        exampleSentence: 'La comida está deliciosa.',
+        exampleTranslation: 'The food is delicious.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'es-p9',
+        phrase: 'La cuenta, por favor.',
+        translation: 'The bill, please.',
+        pronunciation: 'lah kwen-tah pohr fah-bohr'
+      }
+    ],
+    activities: [
+      {
+        id: 'es-u1-l7-a1',
+        type: 'fill_blank',
+        question: 'Un vaso de _____, por favor.',
+        instruction: 'Fill in the blank with the Spanish word for water',
+        correctAnswer: 'agua'
+      }
+    ]
+  },
+  {
+    id: 'es-u1-l8',
+    unitId: 'es-u1',
+    title: 'At the Airport',
+    description: 'Learn simple airport vocabulary and check-in terms.',
+    type: 'audio',
+    xpReward: 20,
+    goals: ['Ask for your gate', 'Understand boarding prompts'],
+    vocabulary: [
+      {
+        id: 'es-v17',
+        word: 'boleto',
+        translation: 'ticket',
+        pronunciation: 'boh-leh-toh',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Aquí está mi boleto de avión.',
+        exampleTranslation: 'Here is my plane ticket.'
+      },
+      {
+        id: 'es-v18',
+        word: 'puerta',
+        translation: 'gate',
+        pronunciation: 'pwer-tah',
+        partOfSpeech: 'noun',
+        exampleSentence: '¿Dónde está la puerta de salida?',
+        exampleTranslation: 'Where is the departure gate?'
+      }
+    ],
+    phrases: [
+      {
+        id: 'es-p10',
+        phrase: 'Tengo mi pasaporte.',
+        translation: 'I have my passport.',
+        pronunciation: 'ten-goh mee pah-sah-pohr-teh'
+      }
+    ],
+    activities: [
+      {
+        id: 'es-u1-l8-a1',
+        type: 'multiple_choice',
+        question: 'What is the Spanish word for "gate"?',
+        options: ['Puerta', 'Mesa', 'Boleto'],
+        correctOptionIndex: 0
+      }
+    ]
+  },
+
+  // ==========================================
+  // JAPANESE EXTRA LESSONS
+  // ==========================================
+  {
+    id: 'ja-u1-l4',
+    unitId: 'ja-u1',
+    title: 'Travel & Directions',
+    description: 'Learn to navigate public transit and ask directions.',
+    type: 'vocabulary',
+    xpReward: 15,
+    goals: ['Ask for train stations', 'Understand simple navigation directions'],
+    vocabulary: [
+      {
+        id: 'ja-v10',
+        word: '駅',
+        translation: 'station',
+        pronunciation: 'eki',
+        partOfSpeech: 'noun',
+        exampleSentence: '駅はどこですか？',
+        exampleTranslation: 'Where is the station?'
+      },
+      {
+        id: 'ja-v11',
+        word: 'ここ',
+        translation: 'here',
+        pronunciation: 'koko',
+        partOfSpeech: 'pronoun',
+        exampleSentence: 'ここは東京です。',
+        exampleTranslation: 'This is Tokyo.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'ja-p6',
+        phrase: '駅はどこですか？',
+        translation: 'Where is the station?',
+        pronunciation: 'eki wa doko desu ka'
+      }
+    ],
+    activities: [
+      {
+        id: 'ja-u1-l4-a1',
+        type: 'multiple_choice',
+        question: 'What is "station" in Japanese?',
+        options: ['ここ', '駅', 'そこ'],
+        correctOptionIndex: 1
+      }
+    ]
+  },
+  {
+    id: 'ja-u1-l5',
+    unitId: 'ja-u1',
+    title: 'Shopping',
+    description: 'Practice buying items in a Japanese convenience store.',
+    type: 'chat',
+    xpReward: 20,
+    goals: ['Ask for prices in Japanese', 'Request item bag/receipt'],
+    vocabulary: [
+      {
+        id: 'ja-v12',
+        word: 'いくら',
+        translation: 'how much',
+        pronunciation: 'ikura',
+        partOfSpeech: 'adverb',
+        exampleSentence: 'これはいくらですか？',
+        exampleTranslation: 'How much is this?'
+      }
+    ],
+    phrases: [
+      {
+        id: 'ja-p7',
+        phrase: 'これはいくらですか？',
+        translation: 'How much is this?',
+        pronunciation: 'kore wa ikura desu ka'
+      }
+    ],
+    activities: [
+      {
+        id: 'ja-u1-l5-a1',
+        type: 'chat_roleplay',
+        question: 'Ask the clerk for the price of green tea.',
+        instruction: 'Ask how much is the item in front of you.',
+        roleplayContext: 'The user enters a Lawson convenience store in Tokyo. The clerk bows and says: "いらっしゃいませ！お弁当は温めますか？"'
+      }
+    ]
+  },
+  {
+    id: 'ja-u1-l6',
+    unitId: 'ja-u1',
+    title: 'Family & Friends',
+    description: 'Describe your family members and introduce friends.',
+    type: 'video',
+    xpReward: 25,
+    goals: ['Introduce family members', 'Use friendly greetings'],
+    vocabulary: [
+      {
+        id: 'ja-v13',
+        word: '家族',
+        translation: 'family',
+        pronunciation: 'kazoku',
+        partOfSpeech: 'noun',
+        exampleSentence: '私の家族は四人です。',
+        exampleTranslation: 'My family has four people.'
+      },
+      {
+        id: 'ja-v14',
+        word: '友達',
+        translation: 'friend',
+        pronunciation: 'tomodachi',
+        partOfSpeech: 'noun',
+        exampleSentence: 'こちらは友達のケンです。',
+        exampleTranslation: 'This is my friend Ken.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'ja-p8',
+        phrase: 'こちらは友達です。',
+        translation: 'This is my friend.',
+        pronunciation: 'kochira wa tomodachi desu'
+      }
+    ],
+    activities: [
+      {
+        id: 'ja-u1-l6-a1',
+        type: 'speak',
+        question: 'Say: "こちらは友達です。"',
+        instruction: 'Speak the sentence clearly',
+        correctAnswer: 'こちらは友達です。'
+      }
+    ]
+  },
+  {
+    id: 'ja-u1-l7',
+    unitId: 'ja-u1',
+    title: 'Food & Dining',
+    description: 'Order sushi or ramen and express dining appreciation.',
+    type: 'grammar',
+    xpReward: 15,
+    goals: ['Order food politely', 'Express appreciation before/after meals'],
+    vocabulary: [
+      {
+        id: 'ja-v15',
+        word: '美味しい',
+        translation: 'delicious',
+        pronunciation: 'oishii',
+        partOfSpeech: 'adjective',
+        exampleSentence: 'このラーメンは美味しいです。',
+        exampleTranslation: 'This ramen is delicious.'
+      },
+      {
+        id: 'ja-v16',
+        word: '水',
+        translation: 'water',
+        pronunciation: 'mizu',
+        partOfSpeech: 'noun',
+        exampleSentence: 'お水をお願いします。',
+        exampleTranslation: 'Water please.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'ja-p9',
+        phrase: 'ごちそうさまでした',
+        translation: 'Thank you for the feast (after eating)',
+        pronunciation: 'gochisousama deshita'
+      }
+    ],
+    activities: [
+      {
+        id: 'ja-u1-l7-a1',
+        type: 'fill_blank',
+        question: 'お水をお____します。',
+        instruction: 'Fill in the missing character for requesting water ("おねがいします")',
+        correctAnswer: 'ねがい'
+      }
+    ]
+  },
+  {
+    id: 'ja-u1-l8',
+    unitId: 'ja-u1',
+    title: 'At the Airport',
+    description: 'Get through customs and locate your bags at Tokyo Haneda.',
+    type: 'audio',
+    xpReward: 20,
+    goals: ['Answer basic border questions', 'Identify exit signs'],
+    vocabulary: [
+      {
+        id: 'ja-v17',
+        word: 'パスポート',
+        translation: 'passport',
+        pronunciation: 'pasupooto',
+        partOfSpeech: 'noun',
+        exampleSentence: 'パスポートを見せてください。',
+        exampleTranslation: 'Please show me your passport.'
+      },
+      {
+        id: 'ja-v18',
+        word: '出口',
+        translation: 'exit',
+        pronunciation: 'deguchi',
+        partOfSpeech: 'noun',
+        exampleSentence: '出口はあちらです。',
+        exampleTranslation: 'The exit is that way.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'ja-p10',
+        phrase: 'パスポートです。',
+        translation: 'Here is my passport.',
+        pronunciation: 'pasupooto desu'
+      }
+    ],
+    activities: [
+      {
+        id: 'ja-u1-l8-a1',
+        type: 'multiple_choice',
+        question: 'What is the Japanese word for "exit"?',
+        options: ['入口', '出口', '切符'],
+        correctOptionIndex: 1
+      }
+    ]
+  },
+
+  // ==========================================
+  // FRENCH EXTRA LESSONS
+  // ==========================================
+  {
+    id: 'fr-u1-l4',
+    unitId: 'fr-u1',
+    title: 'Travel & Directions',
+    description: 'Navigate the metro and ask for famous landmarks.',
+    type: 'vocabulary',
+    xpReward: 15,
+    goals: ['Ask for directions', 'Understand left/right directions'],
+    vocabulary: [
+      {
+        id: 'fr-v10',
+        word: 'où',
+        translation: 'where',
+        pronunciation: 'oo',
+        partOfSpeech: 'adverb',
+        exampleSentence: 'Où se trouve la gare ?',
+        exampleTranslation: 'Where is the station?'
+      },
+      {
+        id: 'fr-v11',
+        word: 'la gare',
+        translation: 'the station',
+        pronunciation: 'lah gahr',
+        partOfSpeech: 'noun',
+        exampleSentence: 'La gare est juste là.',
+        exampleTranslation: 'The station is right there.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'fr-p6',
+        phrase: 'Où est la station de métro ?',
+        translation: 'Where is the metro station?',
+        pronunciation: 'oo eh lah stah-syohn duh meh-troh'
+      }
+    ],
+    activities: [
+      {
+        id: 'fr-u1-l4-a1',
+        type: 'multiple_choice',
+        question: 'What is the French word for "where"?',
+        options: ['Ici', 'Où', 'Là'],
+        correctOptionIndex: 1
+      }
+    ]
+  },
+  {
+    id: 'fr-u1-l5',
+    unitId: 'fr-u1',
+    title: 'Shopping',
+    description: 'Shop for clothes and ask about sizes and prices in Euros.',
+    type: 'chat',
+    xpReward: 20,
+    goals: ['Ask for item prices', 'Inquire about available sizes'],
+    vocabulary: [
+      {
+        id: 'fr-v12',
+        word: 'combien coûte',
+        translation: 'how much does it cost',
+        pronunciation: 'cohm-byah coot',
+        partOfSpeech: 'phrase',
+        exampleSentence: 'Combien coûte cette chemise ?',
+        exampleTranslation: 'How much does this shirt cost?'
+      }
+    ],
+    phrases: [
+      {
+        id: 'fr-p7',
+        phrase: 'C\'est combien ?',
+        translation: 'How much is it?',
+        pronunciation: 'say cohm-byah'
+      }
+    ],
+    activities: [
+      {
+        id: 'fr-u1-l5-a1',
+        type: 'chat_roleplay',
+        question: 'Talk to the clothing shop assistant.',
+        instruction: 'Ask for the price of a black hat.',
+        roleplayContext: 'The user enters a boutique in Le Marais, Paris. The seller smiles and greets: "Bonjour ! Est-ce que je peux vous renseigner ?" The user should ask for a price.'
+      }
+    ]
+  },
+  {
+    id: 'fr-u1-l6',
+    unitId: 'fr-u1',
+    title: 'Family & Friends',
+    description: 'Introduce your family members and describe your pets.',
+    type: 'video',
+    xpReward: 25,
+    goals: ['Name family relations', 'Describe personality traits'],
+    vocabulary: [
+      {
+        id: 'fr-v13',
+        word: 'la mère',
+        translation: 'the mother',
+        pronunciation: 'lah mair',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Ma mère s\'appelle Alice.',
+        exampleTranslation: 'Ma mère s\'appelle Alice.'
+      },
+      {
+        id: 'fr-v14',
+        word: 'le père',
+        translation: 'the father',
+        pronunciation: 'luh pair',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Mon père est médecin.',
+        exampleTranslation: 'Mon père est médecin.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'fr-p8',
+        phrase: 'Voici mon ami.',
+        translation: 'Here is my friend.',
+        pronunciation: 'vwa-see mohn ah-mee'
+      }
+    ],
+    activities: [
+      {
+        id: 'fr-u1-l6-a1',
+        type: 'speak',
+        question: 'Say: "Voici mon ami."',
+        instruction: 'Record yourself repeating the French greeting',
+        correctAnswer: 'Voici mon ami.'
+      }
+    ]
+  },
+  {
+    id: 'fr-u1-l7',
+    unitId: 'fr-u1',
+    title: 'Food & Dining',
+    description: 'Order dinner and beverages at a traditional bistro.',
+    type: 'grammar',
+    xpReward: 15,
+    goals: ['Ask for the check politely', 'Identify common beverage names'],
+    vocabulary: [
+      {
+        id: 'fr-v15',
+        word: 'l\'eau',
+        translation: 'water',
+        pronunciation: 'loh',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Une bouteille d\'eau, s\'il vous plaît.',
+        exampleTranslation: 'A bottle of water, please.'
+      },
+      {
+        id: 'fr-v16',
+        word: 'l\'addition',
+        translation: 'the bill / check',
+        pronunciation: 'lah-dee-syohn',
+        partOfSpeech: 'noun',
+        exampleSentence: 'L\'addition, s\'il vous plaît.',
+        exampleTranslation: 'The bill, please.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'fr-p9',
+        phrase: 'Je voudrais commander.',
+        translation: 'I would like to order.',
+        pronunciation: 'zhuh voo-dreh coh-mahn-day'
+      }
+    ],
+    activities: [
+      {
+        id: 'fr-u1-l7-a1',
+        type: 'fill_blank',
+        question: 'L\'_____ s\'il vous plaît.',
+        instruction: 'Fill in the blank with the French word for "the check" (addition)',
+        correctAnswer: 'addition'
+      }
+    ]
+  },
+  {
+    id: 'fr-u1-l8',
+    unitId: 'fr-u1',
+    title: 'At the Airport',
+    description: 'Navigate check-in and find your boarding gate at Paris CDG.',
+    type: 'audio',
+    xpReward: 20,
+    goals: ['Read boarding instructions', 'Locate luggage claims'],
+    vocabulary: [
+      {
+        id: 'fr-v17',
+        word: 'le passeport',
+        translation: 'the passport',
+        pronunciation: 'luh pahs-pohr',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Votre passeport, s\'il vous plaît.',
+        exampleTranslation: 'Your passport, please.'
+      },
+      {
+        id: 'fr-v18',
+        word: 'le vol',
+        translation: 'the flight',
+        pronunciation: 'luh vohl',
+        partOfSpeech: 'noun',
+        exampleSentence: 'Notre vol est à l\'heure.',
+        exampleTranslation: 'Our flight is on time.'
+      }
+    ],
+    phrases: [
+      {
+        id: 'fr-p10',
+        phrase: 'Où est la porte d\'embarquement ?',
+        translation: 'Where is the boarding gate?',
+        pronunciation: 'oo eh lah pohrt dahm-bar-kuh-mahn'
+      }
+    ],
+    activities: [
+      {
+        id: 'fr-u1-l8-a1',
+        type: 'multiple_choice',
+        question: 'What is the French word for "the flight"?',
+        options: ['Le vol', 'Le train', 'Le billet'],
+        correctOptionIndex: 0
+      }
+    ]
   }
 ];
