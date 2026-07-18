@@ -5,6 +5,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { ClerkProvider, useAuth } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
+import { useLanguageStore } from "../store/useLanguageStore";
+import { useProgressStore } from "../store/useProgressStore";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -16,24 +18,59 @@ if (!publishableKey) {
 SplashScreen.preventAutoHideAsync();
 
 function InitialLayout() {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, userId } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const selectedLanguageId = useLanguageStore((state) => state.selectedLanguageId);
+  const hasHydrated = useLanguageStore((state) => state.hasHydrated);
 
   useEffect(() => {
-    if (!isLoaded) return;
-
-    // Check if the user is currently on an auth page or onboarding
-    const inAuthGroup = segments[0] === "signin" || segments[0] === "signup" || segments[0] === "onboarding";
-
-    if (!isSignedIn && !inAuthGroup) {
-      // If not signed in and trying to access protected screens, redirect to onboarding
-      router.replace("/onboarding");
-    } else if (isSignedIn && inAuthGroup) {
-      // If signed in and on auth/onboarding screens, redirect to home (root)
-      router.replace("/");
+    if (isLoaded) {
+      useProgressStore.setState({ hasHydrated: false });
+      const storageKey = userId ? `lingua-progress-storage-${userId}` : 'lingua-progress-storage';
+      useProgressStore.persist.setOptions({
+        name: storageKey,
+      });
+      useProgressStore.persist.rehydrate();
     }
-  }, [isSignedIn, isLoaded, segments]);
+  }, [isLoaded, userId]);
+
+  useEffect(() => {
+    if (isLoaded && hasHydrated) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoaded, hasHydrated]);
+
+  useEffect(() => {
+    if (!isLoaded || !hasHydrated) return;
+
+    const inAuthGroup = segments[0] === "signin" || segments[0] === "signup" || segments[0] === "onboarding";
+    const onLanguageSelection = segments[0] === "language-selection";
+
+    if (!isSignedIn) {
+      if (!inAuthGroup) {
+        // If not signed in and trying to access protected screens, redirect to onboarding
+        router.replace("/onboarding");
+      }
+    } else {
+      // User is signed in
+      if (!selectedLanguageId) {
+        // Must select a language before accessing home (/) or any other screen
+        if (!onLanguageSelection) {
+          router.replace("/language-selection");
+        }
+      } else {
+        // Language selected, redirect away from onboarding/auth if present
+        if (inAuthGroup) {
+          router.replace("/");
+        }
+      }
+    }
+  }, [isSignedIn, isLoaded, hasHydrated, selectedLanguageId, segments, router]);
+
+  if (!isLoaded || !hasHydrated) {
+    return null;
+  }
 
   return (
     <Stack
@@ -53,10 +90,10 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded || error) {
+    if (error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [error]);
 
   if (!loaded && !error) {
     return null;
