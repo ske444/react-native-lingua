@@ -45,7 +45,7 @@ export default function LanguageSelectionScreen() {
     setSelectedLanguageId(selectedId);
     posthog.capture("language_selected", {
       language_id: selectedId,
-      language_name: selectedLanguage?.name,
+      language_name: selectedLanguage?.name ?? null,
     });
     router.replace("/");
   };

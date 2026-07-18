@@ -3,6 +3,8 @@ title: PostHog Setup - Conclusion
 description: Review and fix any errors in the PostHog integration implementation
 ---
 
+Search for a file called `.posthog-events.json` and read it for available events. You MUST use the actual planned event names from that file in every insight query, replacing examples such as `page_viewed` and `user_signed_up`.
+
 Create a live PostHog dashboard named "Analytics basics (wizard)" from the events you just instrumented, then populate it with up to five insights — lead with the business-critical views: conversion funnels, churn events, and other key signals. Use the exact same event names as implemented in the code. Keep the `(wizard)` tag with that exact casing so anyone browsing PostHog can see the wizard created this dashboard, and so a quick search for `(wizard)` surfaces every wizard-created artifact in one go.
 
 ## How to call PostHog MCP tools
@@ -46,7 +48,7 @@ A trends insight with a breakdown (breakdowns go in `breakdownFilter.breakdowns`
     "kind": "InsightVizNode",
     "source": {
       "kind": "TrendsQuery",
-      "series": [{ "kind": "EventsNode", "event": "user_signed_up", "math": "total" }],
+      "series": [{ "kind": "EventsNode", "event": "<event_name_from_posthog_events_json>", "math": "total" }],
       "interval": "day",
       "dateRange": { "date_from": "-30d" },
       "breakdownFilter": { "breakdowns": [{ "type": "event", "property": "plan" }] },
@@ -67,8 +69,8 @@ A conversion funnel (the window fields are camelCase and live INSIDE `funnelsFil
     "source": {
       "kind": "FunnelsQuery",
       "series": [
-        { "kind": "EventsNode", "event": "page_viewed" },
-        { "kind": "EventsNode", "event": "user_signed_up" }
+        { "kind": "EventsNode", "event": "<first_event_name_from_posthog_events_json>" },
+        { "kind": "EventsNode", "event": "<second_event_name_from_posthog_events_json>" }
       ],
       "dateRange": { "date_from": "-30d" },
       "funnelsFilter": {
@@ -85,8 +87,6 @@ A conversion funnel (the window fields are camelCase and live INSIDE `funnelsFil
 Valid `trendsFilter.display` values are `ActionsLineGraph`, `ActionsBar`, `ActionsAreaGraph`, `ActionsPie`, `ActionsStackedBar`, `BoldNumber`, and `ActionsTable` — names like `ActionsBarChart` or `ActionsBarGraph` are rejected. If an insight call is rejected anyway, fix the payload against these examples rather than retrying variations.
 
 Once the dashboard exists, emit its URL on its own line in your assistant message using this exact marker: `[DASHBOARD_URL] <full https url>`. The wizard parses this marker from your visible message and surfaces the link in the success summary. Mentioning the URL only in thinking or in prose without the marker means the link is dropped.
-
-Search for a file called `.posthog-events.json` and read it for available events.
 
 Do not spawn subagents.
 

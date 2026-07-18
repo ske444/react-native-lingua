@@ -324,10 +324,13 @@ export default function RootLayout() {
   // React Compiler will auto-optimize this effect
   useEffect(() => {
     if (previousPathname.current !== pathname) {
+      // Only include explicitly allowlisted non-sensitive parameters
+      const { id, tab, ref } = params
       posthog.screen(pathname, {
         previous_screen: previousPathname.current ?? null,
-        // Include route params for analytics (filter sensitive data if needed)
-        ...params,
+        ...(id && { id }),
+        ...(tab && { tab }),
+        ...(ref && { ref }),
       })
       previousPathname.current = pathname
     }

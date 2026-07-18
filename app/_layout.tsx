@@ -31,9 +31,18 @@ function InitialLayout() {
 
   useEffect(() => {
     if (previousPathname.current !== pathname) {
+      // Allow only non-sensitive, explicitly approved analytics route properties
+      const allowedParams: Record<string, any> = {};
+      const approvedKeys = ["tab", "screen", "lang", "lessonId", "unitId", "id", "ref"];
+      for (const key of approvedKeys) {
+        if (params[key] !== undefined) {
+          allowedParams[key] = params[key];
+        }
+      }
+
       posthog.screen(pathname, {
         previous_screen: previousPathname.current ?? null,
-        ...params,
+        ...allowedParams,
       });
       previousPathname.current = pathname;
     }

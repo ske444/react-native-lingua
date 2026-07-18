@@ -111,7 +111,7 @@ export default function HomeScreen() {
   const handleContinueLearning = () => {
     posthog.capture("learning_continued", {
       language_id: selectedLanguageId,
-      unit_order: currentUnit?.order,
+      unit_order: currentUnit?.order ?? null,
     });
     router.push("/learn");
   };
@@ -119,16 +119,21 @@ export default function HomeScreen() {
   const handleConversationPractice = () => {
     posthog.capture("conversation_practice_started", {
       language_id: selectedLanguageId,
-      lesson_id: secondLesson?.id,
+      lesson_id: secondLesson?.id ?? null,
     });
     router.push("/chat");
   };
 
   const handleSignOut = async () => {
     posthog.capture("user_signed_out");
-    await posthog.flush();
-    posthog.reset();
-    await signOut();
+    try {
+      await posthog.flush();
+    } catch (e) {
+      console.warn("PostHog flush failed on sign out:", e);
+    } finally {
+      posthog.reset();
+      await signOut();
+    }
   };
 
   // Check completion states
