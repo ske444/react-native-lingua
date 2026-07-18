@@ -1,0 +1,81 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+@theme {
+  /* Brand Colors */
+  --color-brand-purple: #6C4EF5;
+  --color-brand-deep-purple: #5B3BF6;
+  --color-brand-blue: #4D8BFF;
+  --color-brand-green: #21C16B;
+
+  /* Semantic Colors */
+  --color-semantic-success: #21C16B;
+  --color-semantic-warning: #FFC800;
+  --color-semantic-streak: #FF8A00;
+  --color-semantic-error: #FF4D4F;
+  --color-semantic-info: #4D8BFF;
+
+  /* Neutrals */
+  --color-neutral-text-primary: #0D132B;
+  --color-neutral-text-secondary: #6B7280;
+  --color-neutral-border: #E5E7EB;
+  --color-neutral-surface: #F6F7FB;
+  --color-neutral-background: #FFFFFF;
+
+  /* Fonts mapping */
+  --font-poppins-regular: Poppins-Regular;
+  --font-poppins-medium: Poppins-Medium;
+  --font-poppins-semibold: Poppins-SemiBold;
+  --font-poppins-bold: Poppins-Bold;
+}
+
+/* Custom typography utilities for the brand */
+@utility font-h1 {
+  font-family: Poppins-Bold;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+@utility font-h2 {
+  font-family: Poppins-SemiBold;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+@utility font-h3 {
+  font-family: Poppins-SemiBold;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+@utility font-h4 {
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+@utility font-body-large {
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@utility font-body-medium {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@utility font-body-small {
+  font-family: Poppins-Regular;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@utility font-caption {
+  font-family: Poppins-Regular;
+  font-size: 11px;
+  line-height: 1.4;
+}
