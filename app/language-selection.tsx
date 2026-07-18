@@ -26,31 +26,15 @@ const learnerCounts: Record<string, string> = {
 
 export default function LanguageSelectionScreen() {
   const router = useRouter();
-  const { selectedLanguageId, setSelectedLanguageId } = useLanguageStore();
+  const { selectedLanguageId, setSelectedLanguageId, hasHydrated } = useLanguageStore();
   
   // Local state for temporary UI selection before confirmation
   const [selectedId, setSelectedId] = useState<string>(selectedLanguageId || "es");
   const [searchQuery, setSearchQuery] = useState("");
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  // Sync draft selection once store hydration completes
-  useEffect(() => {
-    const unsub = useLanguageStore.persist.onFinishHydration(() => {
-      setHasHydrated(true);
-    });
-
-    if (useLanguageStore.persist.hasHydrated()) {
-      setHasHydrated(true);
-    }
-
-    return () => {
-      unsub();
-    };
-  }, []);
 
   useEffect(() => {
     if (hasHydrated) {
-      setSelectedId(selectedLanguageId);
+      setSelectedId(selectedLanguageId || "es");
     }
   }, [hasHydrated, selectedLanguageId]);
 
