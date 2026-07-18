@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   View, 
   Text, 
@@ -31,6 +31,28 @@ export default function LanguageSelectionScreen() {
   // Local state for temporary UI selection before confirmation
   const [selectedId, setSelectedId] = useState<string>(selectedLanguageId || "es");
   const [searchQuery, setSearchQuery] = useState("");
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  // Sync draft selection once store hydration completes
+  useEffect(() => {
+    const unsub = useLanguageStore.persist.onFinishHydration(() => {
+      setHasHydrated(true);
+    });
+
+    if (useLanguageStore.persist.hasHydrated()) {
+      setHasHydrated(true);
+    }
+
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hasHydrated) {
+      setSelectedId(selectedLanguageId);
+    }
+  }, [hasHydrated, selectedLanguageId]);
 
   const handleConfirm = () => {
     setSelectedLanguageId(selectedId);
@@ -57,6 +79,8 @@ export default function LanguageSelectionScreen() {
               activeOpacity={0.7}
               onPress={() => router.back()}
               className="absolute left-4 z-10 p-1"
+              accessibilityLabel="Go back"
+              accessibilityRole="button"
             >
               <Feather name="chevron-left" size={26} color="#0D132B" />
             </TouchableOpacity>
@@ -76,7 +100,12 @@ export default function LanguageSelectionScreen() {
                 style={{ verticalAlign: "middle" }}
               />
               {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={() => setSearchQuery("")} className="p-0.5">
+                <TouchableOpacity 
+                  onPress={() => setSearchQuery("")} 
+                  className="p-0.5"
+                  accessibilityLabel="Clear search"
+                  accessibilityRole="button"
+                >
                   <Feather name="x" size={16} color="#6B7280" />
                 </TouchableOpacity>
               )}
@@ -110,6 +139,8 @@ export default function LanguageSelectionScreen() {
                       borderWidth: isSelected ? 2 : 1,
                       backgroundColor: isSelected ? "#6C4EF508" : "#FFFFFF",
                     }}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: isSelected }}
                   >
                     {/* Left side: Flag and Info */}
                     <View className="flex-row items-center gap-4">

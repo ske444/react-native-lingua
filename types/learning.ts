@@ -38,18 +38,58 @@ export type ActivityType =
   | 'speak'
   | 'chat_roleplay';
 
-export interface Activity {
+export interface BaseActivity {
   id: string;
-  type: ActivityType;
   question: string;
   instruction?: string; // Guidance for the user
-  options?: string[]; // Multiple choice options
-  correctOptionIndex?: number; // Index of the correct answer
-  correctAnswer?: string; // Translation or text answers
-  pairs?: { left: string; right: string }[]; // Word match pairs
-  audioUrl?: string; // Reference to audio asset
-  roleplayContext?: string; // AI roleplay prompt for tutor/chat lessons
 }
+
+export interface MultipleChoiceActivity extends BaseActivity {
+  type: 'multiple_choice';
+  options: string[]; // Multiple choice options
+  correctOptionIndex: number; // Index of the correct answer
+}
+
+export interface TranslateActivity extends BaseActivity {
+  type: 'translate';
+  correctAnswer: string; // Translation or text answers
+}
+
+export interface ListenSelectActivity extends BaseActivity {
+  type: 'listen_select';
+  audioUrl: string; // Reference to audio asset
+  options: string[]; // Multiple choice options
+  correctOptionIndex: number; // Index of the correct answer
+}
+
+export interface MatchPairsActivity extends BaseActivity {
+  type: 'match_pairs';
+  pairs: { left: string; right: string }[]; // Word match pairs
+}
+
+export interface FillBlankActivity extends BaseActivity {
+  type: 'fill_blank';
+  correctAnswer: string; // Translation or text answers
+}
+
+export interface SpeakActivity extends BaseActivity {
+  type: 'speak';
+  correctAnswer: string; // Translation or text answers
+}
+
+export interface ChatRoleplayActivity extends BaseActivity {
+  type: 'chat_roleplay';
+  roleplayContext: string; // AI roleplay prompt for tutor/chat lessons
+}
+
+export type Activity =
+  | MultipleChoiceActivity
+  | TranslateActivity
+  | ListenSelectActivity
+  | MatchPairsActivity
+  | FillBlankActivity
+  | SpeakActivity
+  | ChatRoleplayActivity;
 
 export interface Vocabulary {
   id: string;
